@@ -16,7 +16,7 @@ class Vote
 
   # Callbacks
   before_create :generate_validator!
-  before_create :confirmation!
+  after_create  :confirmation!
 
   def sum_unique_candidate!
   	self.candidate.inc number_of_unique_votes: 1
@@ -37,9 +37,9 @@ class Vote
 
   def confirmation!
     # TODO Make this asynchronous
-    # if VoteMailer.confirmation(self).deliver
-    #   self.update_attributes confirmation: true, confirmation_at: Time.now
-    # end
+    if VoteMailer.confirmation(self).deliver
+      self.update_attributes confirmation: true, confirmation_at: Time.now
+    end
   end
 end
 

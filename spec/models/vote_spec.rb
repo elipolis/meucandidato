@@ -49,7 +49,13 @@ describe Vote do
 		
 	end
 	
-  describe "#validation!" do
-    xit {}
+  describe "#confirmation!" do
+    subject(:vote) { create(:vote) }
+    before :each do
+      Timecop.freeze
+      vote.active! vote.email_hash
+    end
+    it { expect(subject.confirmation).to be_truthy }
+    it { expect(subject.confirmation_at).to eq Time.now }
   end
 end
