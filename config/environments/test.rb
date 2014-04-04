@@ -29,7 +29,22 @@ Meucandidato::Application.configure do
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
-  config.action_mailer.delivery_method = :test
+  # config.action_mailer.delivery_method = :test
+
+  config_dir = File.join Rails.root, 'config'
+  MAIL = YAML.load_file(File.join(config_dir, 'mail.yml'))[Rails.env]
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: MAIL['address'],
+    port: MAIL['port'],
+    domain: MAIL['domain'],
+    authentication: MAIL['authentication'],
+    enable_starttls_auto: MAIL['enable_starttls_auto'],
+    user_name: MAIL["user_name"],
+    password: MAIL["password"]
+  }
+  config.action_mailer.default_url_options = { :host => "www.pigagile.com" }
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr

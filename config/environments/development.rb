@@ -21,7 +21,9 @@ Meucandidato::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 
-  config.action_mailer.raise_delivery_errors = false
+  config_dir = File.join Rails.root, 'config'
+  MAIL = YAML.load_file(File.join(config_dir, 'mail.yml'))[Rails.env]
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: MAIL['address'],
@@ -32,4 +34,6 @@ Meucandidato::Application.configure do
     user_name: MAIL["user_name"],
     password: MAIL["password"]
   }
+  config.action_mailer.default_url_options = { :host => "http://localhost:3000" }
+
 end

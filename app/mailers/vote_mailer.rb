@@ -1,7 +1,8 @@
 class VoteMailer < ActionMailer::Base
-  default from: "from@example.com"
+  default from: MAIL['user_name']
 
   def confirmation(vote)
-    mail(to: vote.email, subject: 'Welcome to My Awesome Site')
+    @vote = vote
+    mail(to: @vote.email, subject: 'Welcome to My Awesome Site')
   end
 end

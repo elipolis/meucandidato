@@ -57,5 +57,8 @@ describe Vote do
     end
     it { expect(subject.confirmation).to be_truthy }
     it { expect(subject.confirmation_at).to eq Time.now }
+    # send mail by sendmail
+    xit { expect(ActionMailer::Base.deliveries.last).to eq [vote.email] }
+
   end
 end
