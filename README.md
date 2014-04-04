@@ -8,3 +8,4 @@ Public statistics and debate about political
 - Estimular o debate público e livre.
 
 Obs: Todos os testes pendentes são as implementações necessárias
+=======
